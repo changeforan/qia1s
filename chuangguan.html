@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="js/jquery.mobile-1.3.2.min.css">
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <script src="js/jquery.mobile-1.3.2.min.js"></script>
+
+</head>
+
+<script type="text/javascript">
+    var startTime;
+    var endTime;
+    var t;
+    var time;
+
+
+    function timePressed(){
+
+        if (document.getElementById('button_time').innerHTML == "Start!" ) {
+            document.getElementById('button_time').innerHTML="Stop!";
+            $("#button_time").button("refresh");
+            document.getElementById('time').innerHTML="00.00";
+            startTime = new Date().getTime();
+            time = 0;
+            change();
+        }else {
+            document.getElementById('button_time').innerHTML="Start!";
+            $("#button_time").button("refresh");
+            clearTimeout(t);
+            endTime = new Date().getTime();
+            updateTime(Number(endTime) - Number(startTime));
+
+            var para=document.createElement("li");
+            var node=document.createTextNode(document.getElementById('time').innerHTML);
+            para.appendChild(node);
+
+            document.getElementById('results').appendChild(para);
+        }
+    }
+
+
+    function change(){
+        updateTime(time);
+        endTime = new Date().getTime();
+        time = Number(endTime) - Number(startTime);
+        t=setTimeout("change()",10);
+    }
+
+
+    function updateTime(t){
+        document.getElementById('time').innerHTML = (t/1000).toFixed(3);
+    }
+
+
+
+    function init(){
+        var obj = document.getElementById('button_time');
+        obj.addEventListener("touchstart",timePressed,false);
+        document.getElementById('results').removeChild();
+    }
+
+</script>
+<body onload="init()">
+<div data-role="page" id="chuangguan" >
+    <div data-role="header">
+        <h1>闯关模式</h1>
+    </div>
+
+
+
+    <div  data-role="content" align='center'>
+        <p>关卡一：掐出一个1秒，误差300毫秒。<p>
+        <h1 id="time">00.00</h1>
+        <button type="button" id="button_time">Start!</button>
+        <button type="button"  onclick="location='index.html'" >退出游戏</button>
+        <ol id="results">
+
+        </ol>
+    </div>
+
+
+</div>
+</body>
+</html>
