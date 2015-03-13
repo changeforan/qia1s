@@ -8,6 +8,28 @@
 
 </head>
 
+
+<body onload="init()">
+<div data-role="page" id="chuangguan" >
+    <div data-role="header">
+        <h1>闯关模式</h1>
+    </div>
+
+
+
+    <div  data-role="content" align='center'>
+        <p>关卡一：掐出一个1秒，误差300毫秒。<p>
+        <h1 id="time">00.00</h1>
+        <button type="button" id="button_time">Start!</button>
+        <button type="button"  onclick="location='index.html'" >退出游戏</button>
+        <ol id="results">
+
+        </ol>
+    </div>
+
+
+</div>
+</body>
 <script type="text/javascript">
     var startTime;
     var endTime;
@@ -60,27 +82,6 @@
         document.getElementById('results').removeChild();
     }
 
-	init();
+    init();
 </script>
-<body onload="init()">
-<div data-role="page" id="chuangguan" >
-    <div data-role="header">
-        <h1>闯关模式</h1>
-    </div>
-
-
-
-    <div  data-role="content" align='center'>
-        <p>关卡一：掐出一个1秒，误差300毫秒。<p>
-        <h1 id="time">00.00</h1>
-        <button type="button" id="button_time">Start!</button>
-        <button type="button"  onclick="location='index.html'" >退出游戏</button>
-        <ol id="results">
-
-        </ol>
-    </div>
-
-
-</div>
-</body>
 </html>
