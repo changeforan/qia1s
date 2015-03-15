@@ -18,9 +18,9 @@
 
 
     <div  data-role="content" align='center'>
-        <p>关卡一：掐出一个1秒，误差300毫秒。<p>
+        <p id="txt_guan">111111</p>
         <h1 id="time">00.00</h1>
-        <button type="button" id="button_time">Start!</button>
+        <button type="button" id="button_time" onclick="timePressed()">Start!</button>
         <button type="button"  onclick="location='index.html'" >退出游戏</button>
         <ol id="results">
 
@@ -35,6 +35,50 @@
     var endTime;
     var t;
     var time;
+    var num_guan;
+    var total_guan = 4;
+    var guan = new Array();
+    guan[0] = {
+      txt:"关卡一：掐出一个1秒，误差300毫秒。",
+      seconds:1,
+      errorvalue:300
+
+    };
+    guan[1] = {
+        txt:"关卡二：掐出一个1秒，误差100毫秒。",
+        seconds:1,
+        errorvalue:100
+    };
+
+    guan[2] = {
+        txt:"关卡三：掐出一个2秒，误差100毫秒。",
+        seconds:2,
+        errorvalue:100
+    };
+
+    guan[3] = {
+        txt:"关卡四：掐出一个2秒，误差50毫秒。",
+        seconds:2,
+        errorvalue:50
+    };
+    guan[4] = {
+        txt:"关卡五：掐出一个3秒，误差50毫秒。",
+        seconds:3,
+        errorvalue:50
+    };
+
+    guan[5] = {
+        txt:"关卡六：掐出一个1秒，误差20毫秒。",
+        seconds:1,
+        errorvalue:20
+    };
+
+    guan[6] = {
+        txt:"关卡七：掐出一个1秒，误差0毫秒。",
+        seconds:1,
+        errorvalue:0
+    };
+
 
 
     function timePressed(){
@@ -51,16 +95,39 @@
             $("#button_time").button("refresh");
             clearTimeout(t);
             endTime = new Date().getTime();
-            updateTime(Number(endTime) - Number(startTime));
+            var result = Number(endTime) - Number(startTime);
+            updateTime(result);
 
             var para=document.createElement("li");
             var node=document.createTextNode(document.getElementById('time').innerHTML);
             para.appendChild(node);
-
             document.getElementById('results').appendChild(para);
+
+           if ( Math.abs(parseInt(guan[num_guan].seconds) * 1000 - result) < parseInt(guan[num_guan].errorvalue) ) {
+               alert("恭喜过关！");
+               nextguan();
+
+           }
+
+            
         }
     }
 
+    function nextguan(){
+        if (num_guan < total_guan) {
+            num_guan = num_guan + 1;
+
+            document.getElementById('txt_guan').innerHTML = guan[num_guan].txt;
+            while (document.getElementById('results').children[0] != null) {
+
+                document.getElementById('results').removeChild(document.getElementById('results').children[0]);
+            }
+        } else {
+            alert('恭喜通关！');
+            self.location="index.html";
+
+        }
+    }
 
     function change(){
         updateTime(time);
@@ -79,9 +146,11 @@
     function init(){
         var obj = document.getElementById('button_time');
         obj.addEventListener("touchstart",timePressed,false);
-        document.getElementById('results').removeChild();
+        num_guan = 0;
+        document.getElementById('txt_guan').innerHTML = guan[num_guan].txt;
+
     }
 
-    init();
+
 </script>
 </html>
