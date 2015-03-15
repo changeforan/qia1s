@@ -8,17 +8,107 @@
 </head>
 
 
-<body>
+<body onload="init()">
 
 <div data-role="page" id="jixian">
     <div data-role="header">
         <h1>极限模式</h1>
 
     </div>
-
+    <div  data-role="content" align='center'>
+        <h1>请连续掐出一秒，每次误差不超过50毫秒</h1>
+        <h1 id="sum">总分:0</h1>
+        <h1 id="time">0.000</h1>
+    </div>
+    <button type="button" id="button">Start!</button>
     <button type="button"  onclick="location='index.html'" >退出</button>
+    <div  data-role="content" align='center'>
+     <ol id="results"></ol>
+
+    </div>
 
 </div>
 
 </body>
+<script type="text/javascript">
+
+    var errorvalue = 50;
+    var sum = 0;
+    var startTime;
+    var time;
+    var endTime;
+    var temp;
+
+    function init(){
+        var obj = document.getElementById('button');
+        obj.addEventListener("touchstart",buttonPressed,false);
+
+    }
+
+    function buttonPressed(){
+
+
+            endTime = new Date().getTime();
+        if ( document.getElementById('button').innerHTML == "Start!") {
+            document.getElementById('button').innerHTML = "Lap!";
+            $("#button").button("refresh");
+            startTime = new Date().getTime();
+            change();
+        }else if (document.getElementById('button').innerHTML == "Lap!") {
+            var result = Number(endTime) - Number(startTime);
+
+            if (Math.abs(result-1000)<=errorvalue) {
+                if (Math.abs(result-1000)==0) {
+                    var points = 300;
+                }else {
+                    var points = 100 + parseInt(100 -2 * Math.abs(result-1000));
+                }
+                startTime = new Date().getTime();
+                sum+=points;
+                document.getElementById('sum').innerHTML = "总分:"+sum;
+                var para=document.createElement("li");
+                var node=document.createTextNode((result / 1000).toFixed(3)+"   得分:"+points);
+                para.appendChild(node);
+                document.getElementById('results').appendChild(para);
+
+            }else {
+                updateTime(result);
+                clearTimeout(temp);
+                document.getElementById('button').innerHTML = "再来一次";
+                $("#button").button("refresh");
+
+            }
+
+
+        }else{
+            while (document.getElementById('results').children[0] != null) {
+
+                document.getElementById('results').removeChild(document.getElementById('results').children[0]);
+            }
+            document.getElementById('button').innerHTML = "Start!";
+            $("#button").button("refresh");
+            updateTime(0);
+            sum = 0;
+            document.getElementById('sum').innerHTML = "总分:"+sum;
+
+        }
+
+
+
+
+    }
+        function change(){
+            endTime = new Date().getTime();
+            time = Number(endTime) - Number(startTime);
+            updateTime(time);
+
+            temp=setTimeout("change()",5);
+        }
+
+
+        function updateTime(t){
+            document.getElementById('time').innerHTML = (t/1000).toFixed(3);
+        }
+
+</script>
 </html>
