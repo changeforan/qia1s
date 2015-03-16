@@ -93,6 +93,11 @@
                     },
                     function(data,status){
 
+                        while (document.getElementById('list_rank').children[0] != null) {
+
+                            document.getElementById('list_rank').removeChild(document.getElementById('list_rank').children[0]);
+                        }
+
                         $.each(data,function(idx,item){
                             var para=document.createElement("li");
                             para.innerHTML='昵称:'+item.name + "得分:" + item.points + '称号:' + item.title;
