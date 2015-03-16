@@ -89,9 +89,13 @@
                             title:document.getElementById("txt_show_name").innerHTML
                         },
                         function(data,status){
-                            alert(data);
+                            if (data == "success") {
+
+                                $("#form_page").popup("close");
+
+                            }
                         });
-                $("#form_page").popup("close");
+
 
             }
 

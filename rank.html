@@ -13,10 +13,28 @@
 
 <div data-role="page" id="rank">
     <a href="index.html" data-role="button" data-inline="true"  data-icon="home"  data-transition="slide" data-direction="reverse" data-iconpos="notext">首页</a>
+    <ol id="list_rank" data-role="listview" data-inset="true"></ol>
+    <p id="p"></p>
 
 
 
 </div>
 
 </body>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        $.post("server/rank.php",
+                {
+                    action:"check"
+
+                },
+                function(data,status){
+                  document.getElementById("p").innerHTML = data;
+                },
+                "json"
+        );
+
+    })
+</script>
 </html>
