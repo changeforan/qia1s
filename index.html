@@ -77,10 +77,11 @@
 
         $(document).on("pageshow", "#jixian", init);
         $("#bt_share").click(function(){
-           $("#form_page").popup("close");
+
 
             if ( $("#name").val() != ""){
-                $.post("/server/rank.php",
+
+                $.post("server/rank.php",
                         {
                             action:"insert",
                             name:$("#name").val(),
@@ -90,6 +91,7 @@
                         function(data,status){
                             alert(data);
                         });
+                $("#form_page").popup("close");
 
             }
 
