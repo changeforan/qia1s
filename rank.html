@@ -32,10 +32,14 @@
 
                 },
                 function(data,status){
-                    alert(1111);
+
                     $.each(data,function(idx,item){
-                        alert("name:"+item.name+",value:"+item.points);
+//                        alert("name:"+item.name+",value:"+item.points);
+                        var para=document.createElement("li");
+                        para.innerHTML='昵称:'+item.name + "得分:" + item.points + '称号:' + item.title;
+                        $('#list_rank').append(para);
                     });
+                    $("#list_rank").listview('refresh');
 
                 },
                 "json"
