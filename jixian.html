@@ -2,30 +2,28 @@
 <html>
 <head lang="en">
     <meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="js/jquery.mobile-1.3.2.min.css">
-    <script src="js/jquery-1.8.3.min.js"></script>
-    <script src="js/jquery.mobile-1.3.2.min.js"></script>
+    <!--<link rel="stylesheet" href="js/jquery.mobile-1.3.2.min.css">-->
+    <!--<script src="js/jquery-1.8.3.min.js"></script>-->
+    <!--<script src="js/jquery.mobile-1.3.2.min.js"></script>-->
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css">
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
 </head>
 
 
 <body onload="init()">
 
 <div data-role="page" id="jixian">
-    <div data-role="header">
-        <h1>极限模式</h1>
+    <a href="index.html" data-role="button" data-inline="true"  data-icon="home"  >首页</a>
 
-    </div>
     <div  data-role="content" align='center'>
-        <h1>连续掐出1秒，误差小于50毫秒</h1>
+        <p>连续掐出1秒，误差小于50毫秒</p>
         <h1 id="sum">总分:0</h1>
         <h1 id="time">0.000</h1>
+        <ol id="results"></ol>
     </div>
     <button type="button" id="button">Start!</button>
-    <button type="button"  onclick="location='index.html'" >退出</button>
-    <div  data-role="content" align='center'>
-     <ol id="results"></ol>
 
-    </div>
 
 </div>
 
@@ -38,6 +36,7 @@
     var time;
     var endTime;
     var temp;
+    var arr_results = new Array();
 
     function init(){
         var obj = document.getElementById('button');
@@ -66,17 +65,34 @@
                 startTime = new Date().getTime();
                 sum+=points;
                 document.getElementById('sum').innerHTML = "总分:"+sum;
-                var para=document.createElement("li");
-                var node=document.createTextNode((result / 1000).toFixed(3)+"   得分:"+points);
-                para.appendChild(node);
-                document.getElementById('results').appendChild(para);
+//                var para=document.createElement("li");
+//                var node=document.createTextNode((result / 1000).toFixed(3)+"   得分:"+points);
+//                para.appendChild(node);
+//                document.getElementById('results').appendChild(para);
+                arr_results.push((result / 1000).toFixed(3)+"   得分:"+points);
+
 
             }else {
+                var i = 0;
+                while (i < arr_results.length){
+                    var para=document.createElement("li");
+                    var node=document.createTextNode(arr_results[i]);
+                    para.appendChild(node);
+                    document.getElementById('results').appendChild(para);
+                    i++;
+                }
                 updateTime(result);
                 clearTimeout(temp);
                 document.getElementById('button').innerHTML = "再来一次";
                 $("#button").button("refresh");
 
+//                var para = document.createElement("button");
+//                var node=document.createTextNode("OK!");
+//                para.appendChild(node);
+//                para.id = "newbt";
+//
+//                document.getElementById('results').appendChild(para);
+//                $("#newbt").button("refresh");
             }
 
 
@@ -85,6 +101,7 @@
 
                 document.getElementById('results').removeChild(document.getElementById('results').children[0]);
             }
+            arr_results = new Array();
             document.getElementById('button').innerHTML = "Start!";
             $("#button").button("refresh");
             updateTime(0);
