@@ -27,7 +27,7 @@
 
 
         <a href="#jixian" data-role="button"   data-transition="slide">开始游戏</a>
-        <a href="rank.html" data-role="button"   data-transition="slide">排行榜</a>
+        <a href="#rank" data-role="button"   data-transition="slide">排行榜</a>
 
     </div>
 </div>
@@ -68,6 +68,14 @@
 
 </div>
 
+<div data-role="page" id="rank">
+    <a href="index.html" data-role="button" data-inline="true"  data-icon="home"  data-transition="slide" data-direction="reverse" data-iconpos="notext">首页</a>
+    <ol id="list_rank" data-role="listview" data-inset="true"></ol>
+    <p id="p"></p>
+
+
+
+</div>
 
 
 </body>
@@ -76,6 +84,28 @@
     $(document).ready(function() {
 
         $(document).on("pageshow", "#jixian", init);
+
+        $(document).on("pageshow", "#rank", function(){
+            $.post("server/rank.php",
+                    {
+                        action:"check"
+
+                    },
+                    function(data,status){
+
+                        $.each(data,function(idx,item){
+                            var para=document.createElement("li");
+                            para.innerHTML='昵称:'+item.name + "得分:" + item.points + '称号:' + item.title;
+                            $('#list_rank').append(para);
+                        });
+                        $("#list_rank").listview('refresh');
+
+                    },
+                    "json"
+            );
+        });
+
+
         $("#bt_share").click(function(){
 
 
