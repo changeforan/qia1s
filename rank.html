@@ -24,13 +24,19 @@
 <script type="text/javascript">
     $(document).ready(function() {
 
-        $.post("server/rank.php",
+
+
+        $.post("http://121.42.141.119/qia1s/server/rank.php",
                 {
                     action:"check"
 
                 },
                 function(data,status){
-                  document.getElementById("p").innerHTML = data;
+                    alert(1111);
+                    $.each(data,function(idx,item){
+                        alert("name:"+item.name+",value:"+item.points);
+                    });
+
                 },
                 "json"
         );

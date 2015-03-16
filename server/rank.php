@@ -1,4 +1,5 @@
 <?php
+header("Access-Control-Allow-Origin: *");
 $con = mysql_connect("localhost","root","1990911Root");
 if (!$con)
 {
