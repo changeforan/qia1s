@@ -2,9 +2,9 @@
 <html>
 <head>
     <meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="js/jquery.mobile-1.3.2.min.css">
-    <script src="js/jquery-1.8.3.min.js"></script>
-    <script src="js/jquery.mobile-1.3.2.min.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css">
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
 
 
 
@@ -12,21 +12,161 @@
 
 <body>
 
-<div data-role="page">
-    <div data-role="header">
+<div data-role="page" id="index">
+    <div data-role="header" data-theme="c">
         <h1>掐一秒</h1>
 
     </div>
     <div data-role="content" align="center">
         <p>掐一秒游戏需要你准确掌握1秒钟的时间长度，这纯粹依靠你的时间节奏感。</p>
-        <button type="button"  onclick="location='chuangguan.html'" >闯关模式</button>
-        <button type="button"  onclick="location='jixian.html'" >极限模式</button>
-        <button type="button"  onclick="location='rank.html'" >排行榜</button>
+
+
+        <a href="#jixian" data-role="button"   data-transition="slide">开始游戏</a>
+        <a href="rank.html" data-role="button"   data-transition="slide">排行榜</a>
 
     </div>
+</div>
+
+<div data-role="page" id="jixian">
+    <a href="#index" data-role="button" data-inline="true"  data-icon="home"  data-transition="slide" data-direction="reverse" >首页</a>
+
+    <div  data-role="content" align='center'>
+        <p>连续掐出1秒，误差小于50毫秒</p>
+        <h1 id="sum">总分:0</h1>
+        <h1 id="time">0.000</h1>
+
+        <ol data-role="listview" data-inset="true" id="results" >
+
+        </ol>
+        <a data-role="button" href="#form_page"  data-rel="popup" id="bt_show">秀一下</a>
+    </div>
+    <button type="button" id="button">Start!</button>
+
+
+
+
+    <div data-role="popup" id="form_page" data-theme="c">
+        <form method="post" action="">
+            <div style="padding:10px 20px;">
+                <h3>分享到朋友圈</h3>
+                <p>我在掐一秒取得了:</p>
+                <h3 id="txt_show_sum"></h3>
+                <p>荣获称号:</p>
+                <h3 id="txt_show_name"></h3>
+                <input type="text" name="user" id="un" value="" placeholder="输入昵称" data-theme="c" />
+                <button type="submit" data-theme="c">确定</button>
+            </div>
+        </form>
+
+    </div>
+
+
 </div>
 
 
 
 </body>
+<script type="text/javascript">
+
+
+   $(document).on("pageshow","#jixian",init);
+
+
+
+
+
+    var errorvalue = 50;
+    var sum = 0;
+    var startTime;
+    var time;
+    var endTime;
+    var temp;
+    var arr_results = new Array();
+
+
+    function init(){
+        var obj = document.getElementById('button');
+        obj.addEventListener("touchstart",buttonPressed,false);
+
+        while (document.getElementById('results').children[0] != null) {
+
+            document.getElementById('results').removeChild(document.getElementById('results').children[0]);
+        }
+        arr_results = new Array();
+        document.getElementById('button').innerHTML = "Start!";
+        $("#button").button("refresh");
+        updateTime(0);
+        sum = 0;
+        document.getElementById('sum').innerHTML = "总分:"+sum;
+
+        $('#bt_show').css('display','none');
+
+    }
+
+    function buttonPressed(){
+
+
+        endTime = new Date().getTime();
+        if ( document.getElementById('button').innerHTML == "Start!") {
+            document.getElementById('button').innerHTML = "Lap!";
+            $("#button").button("refresh");
+            startTime = new Date().getTime();
+            change();
+        }else if (document.getElementById('button').innerHTML == "Lap!") {
+            var result = Number(endTime) - Number(startTime);
+
+            if (Math.abs(result-1000)<=errorvalue) {
+                if (Math.abs(result-1000)==0) {
+                    var points = 300;
+                }else {
+                    var points = 100 + parseInt(100 -2 * Math.abs(result-1000));
+                }
+                startTime = new Date().getTime();
+                sum+=points;
+                document.getElementById('sum').innerHTML = "总分:"+sum;
+                arr_results.push("得分:"+points+"计时:"+(result / 1000).toFixed(3));
+
+
+            }else {
+                var i = 0;
+                while (i < arr_results.length){
+                    var para=document.createElement("li");
+                    para.innerHTML=arr_results[i];
+                    $('#results').append(para);
+                    i++;
+                }
+                document.getElementById("txt_show_sum").innerHTML = sum+"分";
+                document.getElementById("txt_show_name").innerHTML = "初出茅庐";
+                $("#results").listview('refresh');
+                updateTime(result);
+                clearTimeout(temp);
+                document.getElementById('button').innerHTML = "再来一次";
+                $("#button").button("refresh");
+                $('#bt_show').css('display','');
+            }
+
+
+        }else{
+           init();
+
+        }
+
+
+
+
+    }
+    function change(){
+        endTime = new Date().getTime();
+        time = Number(endTime) - Number(startTime);
+        updateTime(time);
+
+        temp=setTimeout("change()",5);
+    }
+
+
+    function updateTime(t){
+        document.getElementById('time').innerHTML = (t/1000).toFixed(3);
+    }
+
+</script>
 </html>
