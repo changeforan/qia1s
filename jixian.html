@@ -20,7 +20,9 @@
         <p>连续掐出1秒，误差小于50毫秒</p>
         <h1 id="sum">总分:0</h1>
         <h1 id="time">0.000</h1>
-        <ol id="results"></ol>
+        <ol data-role="listview" data-inset="true" id="results" >
+
+        </ol>
     </div>
     <button type="button" id="button">Start!</button>
 
@@ -65,34 +67,22 @@
                 startTime = new Date().getTime();
                 sum+=points;
                 document.getElementById('sum').innerHTML = "总分:"+sum;
-//                var para=document.createElement("li");
-//                var node=document.createTextNode((result / 1000).toFixed(3)+"   得分:"+points);
-//                para.appendChild(node);
-//                document.getElementById('results').appendChild(para);
-                arr_results.push((result / 1000).toFixed(3)+"   得分:"+points);
+                arr_results.push((result / 1000).toFixed(3)+"得分:"+points);
 
 
             }else {
                 var i = 0;
                 while (i < arr_results.length){
                     var para=document.createElement("li");
-                    var node=document.createTextNode(arr_results[i]);
-                    para.appendChild(node);
-                    document.getElementById('results').appendChild(para);
+                    para.innerHTML=arr_results[i];
+                    $('#results').append(para);
                     i++;
                 }
+                $('#results').listview('refresh');
                 updateTime(result);
                 clearTimeout(temp);
                 document.getElementById('button').innerHTML = "再来一次";
                 $("#button").button("refresh");
-
-//                var para = document.createElement("button");
-//                var node=document.createTextNode("OK!");
-//                para.appendChild(node);
-//                para.id = "newbt";
-//
-//                document.getElementById('results').appendChild(para);
-//                $("#newbt").button("refresh");
             }
 
 
