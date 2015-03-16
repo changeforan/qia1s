@@ -19,14 +19,10 @@ if ($request == "insert") {
 
 }else{
 
-    $temp = array();
+
 
     $result = mysql_query("select * from rank ORDER BY points DESC ");
-    while ($row = mysql_fetch_array($result))
-    {
-        array_push($temp,$row);
-    }
-    echo json_encode($temp);
+    echo json_encode($result);
 
 
 
