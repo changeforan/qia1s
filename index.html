@@ -61,7 +61,7 @@
                 <p>我在掐一秒游戏取得了:</p>
                 <h3 id="txt_show_sum"></h3>
                 <p>荣获称号:</p>
-                <h3 id="txt_show_name"></h3>
+                <h3 id="txt_show_title"></h3>
                 <input type="text" id="name" value="" placeholder="输入昵称" data-theme="c" />
                 <button type="button" data-theme="c" id="bt_share">提交成绩</button>
                 <button type="button" data-theme="c" id="bt_cancel">取消</button>
@@ -75,10 +75,13 @@
 
 <div data-role="page" id="rank">
 
+    <div  data-role="content" align='center'>
+
     <ol id="list_rank" data-role="listview" data-inset="true"></ol>
     <p id="p"></p>
     <a href="#jixian" data-role="button"   data-transition="slide" data-transition="slide" data-direction="reverse">返回游戏</a>
-
+    
+    </div>
 
 
 
@@ -155,7 +158,7 @@
                             action:"insert",
                             name:$("#name").val(),
                             points:sum,
-                            title:$("#txt_show_name").text()
+                            title:$("#txt_show_title").text()
                         },
                         function(data,status){$("#form_page").popup("close");});
             }
@@ -203,9 +206,9 @@
 
                 $("#txt_show_sum").text(sum+"分");
 
-                $("#txt_show_name").text(title[(sum>51000) ? 50 : (parseInt(sum/1000))]);
+                $("#txt_show_title").text(title[(sum>51000) ? 50 : (parseInt(sum/1000))]);
 
-                $('#title').text("我在掐一秒游戏取得了" + $("#txt_show_sum").text() +";荣获称号:"+$("#txt_show_name").text());
+                $('#title').text("我在掐一秒游戏取得了" + $("#txt_show_sum").text() +";荣获称号:"+$("#txt_show_title").text());
                 $("#results").listview('refresh');
                 updateTime(result);
                 clearTimeout(temp);
