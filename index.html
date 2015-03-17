@@ -83,51 +83,33 @@
     $(document).on("pageshow", "#index", function(){
 
         $('#title').text("掐一秒");
-        $(document).on("pageshow", "#jixian", init);
-        $(document).on("pageshow", "#rank", function(){
-            $.post("server/rank.php",
-                    {
-                        action:"check"
 
-                    },
-                    function(data,status){
+    });
 
-                        while (document.getElementById('list_rank').children[0] != null) {
+    $(document).on("pageshow", "#jixian", init);
+    $(document).on("pageshow", "#rank", function(){
+        $.post("server/rank.php",
+                {
+                    action:"check"
 
-                            document.getElementById('list_rank').removeChild(document.getElementById('list_rank').children[0]);
-                        }
+                },
+                function(data,status){
 
-                        $.each(data,function(idx,item){
-                            var para=document.createElement("li");
-                            para.innerHTML='昵称:'+item.name + "得分:" + item.points + '称号:' + item.title;
-                            $('#list_rank').append(para);
-                        });
-                        $("#list_rank").listview('refresh');
+                    while (document.getElementById('list_rank').children[0] != null) {
 
-                    },
-                    "json"
-            );
-        });
-        $("#bt_share").click(function(){
+                        document.getElementById('list_rank').removeChild(document.getElementById('list_rank').children[0]);
+                    }
 
-            if ( $("#name").val() != ""){
+                    $.each(data,function(idx,item){
+                        var para=document.createElement("li");
+                        para.innerHTML='昵称:'+item.name + "得分:" + item.points + '称号:' + item.title;
+                        $('#list_rank').append(para);
+                    });
+                    $("#list_rank").listview('refresh');
 
-                $.post("server/rank.php",
-                        {
-                            action:"insert",
-                            name:$("#name").val(),
-                            points:sum,
-                            title:$("#txt_show_name").text()
-                        },
-                        function(data,status){
-                            if (data == "success") {
-
-                                $("#form_page").popup("close");
-
-                            }
-                        });
-            }
-        });
+                },
+                "json"
+        );
     });
 
     var errorvalue = 50;
@@ -156,6 +138,27 @@
         document.getElementById('sum').innerHTML = "总分:"+sum;
 
         $('#bt_show').css('display','none');
+
+        $("#bt_share").click(function(){
+
+            if ( $("#name").val() != ""){
+
+                $.post("server/rank.php",
+                        {
+                            action:"insert",
+                            name:$("#name").val(),
+                            points:sum,
+                            title:$("#txt_show_name").text()
+                        },
+                        function(data,status){
+                            if (data == "success") {
+
+                                $("#form_page").popup("close");
+
+                            }
+                        });
+            }
+        });
 
 
     }
