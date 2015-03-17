@@ -39,7 +39,7 @@
     </div>
 
     <div  data-role="content" align='center'>
-        <p>连续掐出1秒，误差小于50毫秒</p>
+        <p id="dif">连续掐出1秒，误差小于100毫秒</p>
         <h3 id="sum">总分:0</h3>
         <h1 id="time">0.00</h1>
 
@@ -80,7 +80,7 @@
     <ol id="list_rank" data-role="listview" data-inset="true"></ol>
     <p id="p"></p>
     <a href="#jixian" data-role="button"   data-transition="slide" data-transition="slide" data-direction="reverse">返回游戏</a>
-    
+
     </div>
 
 
@@ -123,7 +123,7 @@
         );
     });
 
-    var errorvalue = 50;
+    var errorvalue = 100;
     var sum = 0;
     var startTime;
     var time;
@@ -184,12 +184,17 @@
                 if (Math.abs(result-1000)==0) {
                     var points = 300;
                 }else {
-                    var points = 100 + parseInt(100 -2 * Math.abs(result-1000));
+                    var points = 100 + parseInt(100 -(100/errorvalue) * Math.abs(result-1000));
                 }
                 startTime = new Date().getTime();
                 sum+=points;
                 document.getElementById('sum').innerHTML = "总分:"+sum;
                 arr_results.push("得分:"+points+"计时:"+(result / 1000).toFixed(3));
+
+                if (sum > 2000) {
+                    errorvalue = 50;
+                    $('#dif').text('连续掐出1秒，误差小于50毫秒');
+                }
 
 
             }else {
