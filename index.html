@@ -146,6 +146,8 @@
         $("#button").button("refresh");
         updateTime(0);
         sum = 0;
+        errorvalue = 100;
+        $('#dif').text('连续掐出1秒，误差小于100毫秒');
         document.getElementById('sum').innerHTML = "总分:"+sum;
 
         $('#bt_show').css('display','none');
