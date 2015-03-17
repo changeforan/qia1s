@@ -26,25 +26,30 @@
 
 
         <a href="#jixian" data-role="button"   data-transition="slide">开始游戏</a>
-        <a href="#rank" data-role="button"   data-transition="slide">排行榜</a>
+
 
     </div>
 </div>
 
 <div data-role="page" id="jixian">
-    <a href="#index" data-role="button" data-inline="true"  data-icon="home"  data-transition="slide" data-direction="reverse" data-iconpos="notext">首页</a>
+    <div data-role="header" data-theme="c">
+    <a href="#index" data-role="button"   data-icon="info"  data-transition="slide" data-direction="reverse" data-theme="c">游戏介绍</a>
+        <h1 ></h1>
+    <a href="#rank" data-role="button"   data-icon="grid"  data-transition="slide"  data-theme="c">游戏排名</a>
+    </div>
 
     <div  data-role="content" align='center'>
         <p>连续掐出1秒，误差小于50毫秒</p>
-        <h1 id="sum">总分:0</h1>
-        <h1 id="time">0.000</h1>
+        <h3 id="sum">总分:0</h3>
+        <h1 id="time">0.00</h1>
 
         <ol data-role="listview" data-inset="true" id="results" >
 
         </ol>
         <a data-role="button" href="#form_page"  data-rel="popup" id="bt_show">秀一下</a>
+        <button type="button" id="button">Start!</button>
     </div>
-    <button type="button" id="button">Start!</button>
+
 
 
 
@@ -52,13 +57,14 @@
     <div data-role="popup" id="form_page" data-theme="c">
         <form id="form">
             <div style="padding:10px 20px;">
-                <h3>请点击右上角分享到朋友圈</h3>
+                <h3>请点击微信分享到朋友圈</h3>
                 <p>我在掐一秒游戏取得了:</p>
                 <h3 id="txt_show_sum"></h3>
                 <p>荣获称号:</p>
                 <h3 id="txt_show_name"></h3>
                 <input type="text" id="name" value="" placeholder="输入昵称" data-theme="c" />
                 <button type="button" data-theme="c" id="bt_share">提交成绩</button>
+                <button type="button" data-theme="c" id="bt_cancel">取消</button>
             </div>
         </form>
 
@@ -68,9 +74,11 @@
 </div>
 
 <div data-role="page" id="rank">
-    <a href="index.html" data-role="button" data-inline="true"  data-icon="home"  data-transition="slide" data-direction="reverse" data-iconpos="notext">首页</a>
+
     <ol id="list_rank" data-role="listview" data-inset="true"></ol>
     <p id="p"></p>
+    <a href="#jixian" data-role="button"   data-transition="slide" data-transition="slide" data-direction="reverse">返回游戏</a>
+
 
 
 
@@ -138,11 +146,10 @@
         document.getElementById('sum').innerHTML = "总分:"+sum;
 
         $('#bt_show').css('display','none');
+        $('#time').css('font-size','60px');
 
         $("#bt_share").click(function(){
-
             if ( $("#name").val() != ""){
-
                 $.post("server/rank.php",
                         {
                             action:"insert",
@@ -150,15 +157,10 @@
                             points:sum,
                             title:$("#txt_show_name").text()
                         },
-                        function(data,status){
-                            if (data == "success") {
-
-                                $("#form_page").popup("close");
-
-                            }
-                        });
+                        function(data,status){$("#form_page").popup("close");});
             }
         });
+        $('#bt_cancel').click(function(){$("#form_page").popup("close");});
 
 
     }
@@ -232,7 +234,7 @@
 
 
     function updateTime(t){
-        document.getElementById('time').innerHTML = (t/1000).toFixed(3);
+        $('#time').text((t/1000).toFixed(2));
     }
 
 </script>
