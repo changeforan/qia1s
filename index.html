@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+    <title id="title">掐一秒</title>
+
     <meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1">
-    <!--<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css">-->
     <link rel="stylesheet" href="js/jquery.mobile-1.3.2.min.css">
     <script src="js/jquery-1.8.3.min.js"></script>
     <script src="js/jquery.mobile-1.3.2.min.js"></script>
@@ -15,10 +17,7 @@
 <body>
 
 <div data-role="page" id="index">
-    <div data-role="header" data-theme="c">
-        <h1>掐一秒</h1>
 
-    </div>
     <div data-role="content" align="center">
         <p>掐一秒游戏操作非常简单</p>
         <P>你只需要每隔一秒钟点击一次屏幕</p>
@@ -53,13 +52,13 @@
     <div data-role="popup" id="form_page" data-theme="c">
         <form id="form">
             <div style="padding:10px 20px;">
-                <h3>分享到朋友圈</h3>
+                <h3>请点击右上角分享到朋友圈</h3>
                 <p>我在掐一秒游戏取得了:</p>
                 <h3 id="txt_show_sum"></h3>
                 <p>荣获称号:</p>
                 <h3 id="txt_show_name"></h3>
                 <input type="text" id="name" value="" placeholder="输入昵称" data-theme="c" />
-                <button type="button" data-theme="c" id="bt_share">确定</button>
+                <button type="button" data-theme="c" id="bt_share">提交成绩</button>
             </div>
         </form>
 
@@ -83,9 +82,8 @@
 
     $(document).on("pageshow", "#index", function(){
 
-
+        $('#title').text("掐一秒");
         $(document).on("pageshow", "#jixian", init);
-
         $(document).on("pageshow", "#rank", function(){
             $.post("server/rank.php",
                     {
@@ -110,10 +108,7 @@
                     "json"
             );
         });
-
-
         $("#bt_share").click(function(){
-
 
             if ( $("#name").val() != ""){
 
@@ -122,7 +117,7 @@
                             action:"insert",
                             name:$("#name").val(),
                             points:sum,
-                            title:document.getElementById("txt_show_name").innerHTML
+                            title:$("#txt_show_name").text()
                         },
                         function(data,status){
                             if (data == "success") {
@@ -131,24 +126,9 @@
 
                             }
                         });
-
-
             }
-
         });
-
-
     });
-
-
-
-
-
-
-
-
-
-
 
     var errorvalue = 50;
     var sum = 0;
@@ -177,6 +157,7 @@
 
         $('#bt_show').css('display','none');
 
+
     }
 
     function buttonPressed(){
@@ -204,6 +185,8 @@
 
 
             }else {
+
+//                游戏结束
                 var i = 0;
                 while (i < arr_results.length){
                     var para=document.createElement("li");
@@ -211,13 +194,17 @@
                     $('#results').append(para);
                     i++;
                 }
-                document.getElementById("txt_show_sum").innerHTML = sum+"分";
 
-                document.getElementById("txt_show_name").innerHTML = title[(sum>51000) ? 50 : (parseInt(sum/1000))];
+
+                $("#txt_show_sum").text(sum+"分");
+
+                $("#txt_show_name").text(title[(sum>51000) ? 50 : (parseInt(sum/1000))]);
+
+                $('#title').text("我在掐一秒游戏取得了" + $("#txt_show_sum").text() +";荣获称号:"+$("#txt_show_name").text());
                 $("#results").listview('refresh');
                 updateTime(result);
                 clearTimeout(temp);
-                document.getElementById('button').innerHTML = "再来一次";
+                $('#button').text("再来一次");
                 $("#button").button("refresh");
                 $('#bt_show').css('display','');
             }
