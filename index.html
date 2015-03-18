@@ -77,7 +77,22 @@
 
     <div  data-role="content" align='center'>
 
-    <ol id="list_rank" data-role="listview" data-inset="true"></ol>
+
+        <table data-role="table"   data-mode="reflow" class="ui-responsive table-stroke" >
+            <thead>
+            <tr>
+                <th data-priority="1">名次</th>
+                <th data-priority="2">昵称</th>
+                <th data-priority="3">得分</th>
+                <th data-priority="4">称号</th>
+            </tr>
+            </thead>
+            <tbody id="rank_table">
+
+            </tbody>
+
+        </table>
+
     <p id="p"></p>
     <a href="#jixian" data-role="button"   data-transition="slide" data-transition="slide" data-direction="reverse">返回游戏</a>
 
@@ -106,15 +121,21 @@
                 },
                 function(data,status){
 
-                    while (document.getElementById('list_rank').children[0] != null) {
+                    while (document.getElementById('rank_table').children[0] != null) {
 
-                        document.getElementById('list_rank').removeChild(document.getElementById('list_rank').children[0]);
+                        document.getElementById('rank_table').removeChild(document.getElementById('rank_table').children[0]);
                     }
 
+                    var i = 0;
+
                     $.each(data,function(idx,item){
-                        var para=document.createElement("li");
-                        para.innerHTML='昵称:'+item.name + "得分:" + item.points + '称号:' + item.title;
-                        $('#list_rank').append(para);
+                        i++;
+                        var para=document.createElement('tr');
+                        para.innerHTML='<td>'+i +'</td>'+'<td>'+item.name +'</td>'+'<td>'+item.points+'</td>'+'<td>'+item.title +'</td>';
+                        $('#rank_table').append(para);
+
+
+
                     });
                     $("#list_rank").listview('refresh');
 
