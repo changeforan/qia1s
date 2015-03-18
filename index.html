@@ -73,13 +73,14 @@
 
 </div>
 
+
 <div data-role="page" id="rank">
 
     <div  data-role="content" align='center'>
 
 
-        <table data-role="table"   data-mode="reflow" class="ui-responsive table-stroke" >
-            <thead>
+        <table data-role="table" data-mode="reflow" class="ui-responsive table-stroke" id="rank_table" >
+            <thead id="rank_table_thead">
             <tr>
                 <th data-priority="1">名次</th>
                 <th data-priority="2">昵称</th>
@@ -87,13 +88,12 @@
                 <th data-priority="4">称号</th>
             </tr>
             </thead>
-            <tbody id="rank_table">
+            <tbody id="rank_table_tbody">
 
             </tbody>
 
         </table>
 
-    <p id="p"></p>
     <a href="#jixian" data-role="button"   data-transition="slide" data-transition="slide" data-direction="reverse">返回游戏</a>
 
     </div>
@@ -114,6 +114,8 @@
 
     $(document).on("pageshow", "#jixian", init);
     $(document).on("pageshow", "#rank", function(){
+
+
         $.post("server/rank.php",
                 {
                     action:"check"
@@ -121,9 +123,9 @@
                 },
                 function(data,status){
 
-                    while (document.getElementById('rank_table').children[0] != null) {
+                    while (document.getElementById('rank_table_tbody').children[0] != null) {
 
-                        document.getElementById('rank_table').removeChild(document.getElementById('rank_table').children[0]);
+                        document.getElementById('rank_table_tbody').removeChild(document.getElementById('rank_table_tbody').children[0]);
                     }
 
                     var i = 0;
@@ -131,13 +133,13 @@
                     $.each(data,function(idx,item){
                         i++;
                         var para=document.createElement('tr');
-                        para.innerHTML='<td>'+i +'</td>'+'<td>'+item.name +'</td>'+'<td>'+item.points+'</td>'+'<td>'+item.title +'</td>';
-                        $('#rank_table').append(para);
-
-
+                        para.innerHTML='<th>'+i +'</th>'+'<td>'+item.name +'</td>'+'<td>'+item.points+'</td>'+'<td>'+item.title +'</td>'
+                        $('#rank_table_tbody').append(para);
 
                     });
-                    $("#list_rank").listview('refresh');
+
+                    $('#rank_table').table('refresh');
+
 
                 },
                 "json"
@@ -173,6 +175,7 @@
 
         $('#bt_show').css('display','none');
         $('#time').css('font-size','60px');
+
 
         $("#bt_share").click(function(){
             if ( $("#name").val() != ""){
