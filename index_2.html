@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1">
+    <title>掐一秒游戏</title>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+<div data-role="page" id="game">
+    <div data-role="header" >
+        <a href="#" data-role="button"   data-icon="info"  data-transition="slide" data-direction="reverse" >游戏介绍</a>
+        <h1 ></h1>
+        <a href="#" data-role="button"   data-icon="bullets"  data-transition="slide" >游戏排名</a>
+    </div>
+
+    <div  data-role="content" align='center'>
+        <p>点击开始游戏后对每一秒计次</p>
+        <p id="dif">当前误差范围100毫秒</p>
+        <h3 id="timer_lap">计次:0.00</h3>
+        <h1 id="timer_total">00:00.00</h1>
+        <a data-role="button" href="#"  data-rel="popup" id="bt_show">秀一下</a>
+        <button type="button" id="button">开始!</button>
+    </div>
+</div>
+
+</body>
+</html>
