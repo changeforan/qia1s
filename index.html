@@ -150,7 +150,7 @@
                         sum += points;
                         var para = document.createElement('tr');
                         para.innerHTML = '<th>'+lap_count+'</th>'+'<td>'+Math.abs(lap)+'</td>'+'<td>'+points+'</td>';
-                        $('#results_table_body').append(para);
+                        $('#results_table_body').after(para);
                         $('#results_table').table('refresh');
 
 
