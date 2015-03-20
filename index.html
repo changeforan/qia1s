@@ -1,84 +1,71 @@
 <!DOCTYPE html>
 <html>
-<head>
-
-    <title id="title">掐一秒</title>
-
-    <meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="js/jquery.mobile-1.3.2.min.css">
-    <script src="js/jquery-1.8.3.min.js"></script>
-    <script src="js/jquery.mobile-1.3.2.min.js"></script>
-
-
-
-
+<head lang="en">
+    <title>掐一秒游戏</title>
+    <meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 </head>
-
 <body>
+<!--游戏页面---------------------------------------------------------------------------------------------->
+<div data-role="page" id="game">
+    <div data-role="header" >
+        <a href="#info" data-role="button"   data-icon="info"  data-transition="slide" data-direction="reverse" >游戏介绍</a>
+        <h1 ></h1>
+        <a href="#rank" data-role="button"   data-icon="bullets"  data-transition="slide" >游戏排名</a>
+    </div>
 
-<div data-role="page" id="index">
+    <div  data-role="content" align='center'>
+        <p>点击开始游戏后对每一秒计次</p>
+        <p id="dif">当前误差范围50毫秒</p>
+        <h3 id="timer_lap">计次:0.00</h3>
+        <h1 id="timer_total">00:00.00</h1>
+        <a data-role="button" href="#show"  id="bt_show"  data-rel="dialog" data-transition="flip">秀一下</a>
+        <button type="button" id="button">开始</button>
+        <table data-role="table" data-mode="reflow" class="ui-responsive table-stroke" id="results_table" >
+            <thead id="results_table_head"></thead>
+            <tbody id="results_table_body"></tbody>
+        </table>
+    </div>
 
+</div>
+
+<!--游戏结果页面---------------------------------------------------------------------------------------------->
+
+<div data-role="page" id="show">
+
+    <div  data-role="content" align='center'>
+        <form id="form">
+        <h3>请点击微信分享到朋友圈</h3>
+        <p>我在掐一秒游戏取得了:</p>
+        <h3 id="txt_show_sum"></h3>
+        <p>荣获称号:</p>
+        <h3 id="txt_show_title"></h3>
+        <input type="text" id="name" value="" placeholder="输入昵称"/>
+        <button type="button" data-theme="c" id="bt_share">提交成绩</button>
+        <a href="#game" data-role="button"  data-transition="flip">返回游戏</a>
+        </form>
+    </div>
+
+</div>
+
+<!--游戏介绍---------------------------------------------------------------------------------------------->
+
+<div data-role="page" id="info">
     <div data-role="content" align="center">
         <p>掐一秒游戏操作非常简单</p>
         <P>你只需要每隔一秒钟点击一次屏幕</p>
         <p>保持平和的心态最关键</p>
         <p>祝你取得好成绩</p>
-
-
-        <a href="#jixian" data-role="button"   data-transition="slide">开始游戏</a>
-
-
+        <a href="#game" data-role="button"   data-transition="slide">返回游戏</a>
     </div>
-</div>
-
-<div data-role="page" id="jixian">
-    <div data-role="header" data-theme="c">
-    <a href="#index" data-role="button"   data-icon="info"  data-transition="slide" data-direction="reverse" data-theme="c">游戏介绍</a>
-        <h1 ></h1>
-    <a href="#rank" data-role="button"   data-icon="grid"  data-transition="slide"  data-theme="c">游戏排名</a>
-    </div>
-
-    <div  data-role="content" align='center'>
-        <p id="dif">连续掐出1秒，误差小于100毫秒</p>
-        <h3 id="sum">总分:0</h3>
-        <h1 id="time">0.00</h1>
-
-        <ol data-role="listview" data-inset="true" id="results" >
-
-        </ol>
-        <a data-role="button" href="#form_page"  data-rel="popup" id="bt_show">秀一下</a>
-        <button type="button" id="button">Start!</button>
-    </div>
-
-
-
-
-
-    <div data-role="popup" id="form_page" data-theme="c">
-        <form id="form">
-            <div style="padding:10px 20px;">
-                <h3>请点击微信分享到朋友圈</h3>
-                <p>我在掐一秒游戏取得了:</p>
-                <h3 id="txt_show_sum"></h3>
-                <p>荣获称号:</p>
-                <h3 id="txt_show_title"></h3>
-                <input type="text" id="name" value="" placeholder="输入昵称" data-theme="c" />
-                <button type="button" data-theme="c" id="bt_share">提交成绩</button>
-                <button type="button" data-theme="c" id="bt_cancel">取消</button>
-            </div>
-        </form>
-
-    </div>
-
 
 </div>
-
-
+<!--用户排名---------------------------------------------------------------------------------------------->
 <div data-role="page" id="rank">
-
     <div  data-role="content" align='center'>
-
-
+        <a href="#game" data-role="button"   data-transition="slide" data-transition="slide" data-direction="reverse">返回游戏</a>
         <table data-role="table" data-mode="reflow" class="ui-responsive table-stroke" id="rank_table" >
             <thead id="rank_table_thead">
             <tr>
@@ -88,92 +75,36 @@
                 <th data-priority="4">称号</th>
             </tr>
             </thead>
-            <tbody id="rank_table_tbody">
-
+            <tbody id="rank_table_body">
             </tbody>
-
         </table>
 
-    <a href="#jixian" data-role="button"   data-transition="slide" data-transition="slide" data-direction="reverse">返回游戏</a>
-
     </div>
-
-
-
 </div>
-
-
 </body>
 <script type="text/javascript">
-
-    $(document).on("pageshow", "#index", function(){
-
-        $('#title').text("掐一秒");
-
-    });
-
-    $(document).on("pageshow", "#jixian", init);
-    $(document).on("pageshow", "#rank", function(){
-
-
-        $.post("http://121.42.141.119/qia1s/server/rank.php",
-                {
-                    action:"check"
-                },
-                function(data,status){
-                    while (document.getElementById('rank_table_tbody').children[0] != null) {
-                        document.getElementById('rank_table_tbody').removeChild(document.getElementById('rank_table_tbody').children[0]);
-                    }
-                    var i = 0;
-                    $.each(data,function(idx,item){
-                        i++;
-                        var para=document.createElement('tr');
-                        para.innerHTML='<th>'+i +'</th>'+'<td>'+item.name +'</td>'+'<td>'+item.points+'</td>'+'<td>'+item.title +'</td>';
-                        $('#rank_table_tbody').append(para);
-                    });
-                    $('#rank_table tr td').css('font-size','20px');
-                    $('#rank_table tr th').css('font-size','20px');
-
-                    $('#rank_table').table('refresh');
-
-
-                },
-                "json"
-        );
-    });
-
-    var errorvalue = 100;
+    var errorvalue = 50;
     var sum = 0;
+    var lap_count = 0;
     var startTime;
-    var time;
+    var lapStartTime;
+    var timer;
     var endTime;
-    var temp;
     var arr_results = new Array();
     var title = new Array('不堪一击','毫不足虑','不足挂齿','初学乍练','勉勉强强','初窥门径','初出茅庐','略知一二','普普通通','平平常常','平淡无奇','粗懂皮毛','半生不熟','登堂入室','略有小成','已有小成','鹤立鸡群','驾轻就熟','青出於蓝','融会贯通','心领神会','炉火纯青','了然於胸','略有大成','已有大成','豁然贯通','非比寻常','出类拔萃','罕有敌手','技冠群雄','神乎其技','出神入化','傲视群雄','登峰造极','无与伦比','所向披靡','一代宗师','精深奥妙','神功盖世','举世无双','惊世骇俗','撼天动地','震古铄今','超凡入圣','威镇寰宇','空前绝后','天人合一','深藏不露','深不可测','返璞归真','极准很准');
 
-
+    $(document).ready(init());
     function init(){
-        var obj = document.getElementById('button');
-        obj.addEventListener("touchstart",buttonPressed,false);
-
-        while (document.getElementById('results').children[0] != null) {
-
-            document.getElementById('results').removeChild(document.getElementById('results').children[0]);
-        }
-        arr_results = new Array();
-        document.getElementById('button').innerHTML = "Start!";
-        $("#button").button("refresh");
-        updateTime(0);
-        sum = 0;
-        errorvalue = 100;
-        $('#dif').text('连续掐出1秒，误差小于100毫秒');
-        document.getElementById('sum').innerHTML = "总分:"+sum;
-
+        $(document).on("pageshow","#rank",rankPageShow);
         $('#bt_show').css('display','none');
-        $('#time').css('font-size','60px');
+        $('#button').touchstart(buttonPressed);
+        $("#bt_share").click(share);
 
 
-        $("#bt_share").click(function(){
+    }
+
+    function share(){
+
             if ( $("#name").val() != ""){
                 $.post("server/rank.php",
                         {
@@ -182,89 +113,109 @@
                             points:sum,
                             title:$("#txt_show_title").text()
                         },
-                        function(data,status){$("#form_page").popup("close");});
-            }
-        });
-        $('#bt_cancel').click(function(){$("#form_page").popup("close");});
-
+                        function(data,status){
+                            if (data == 'success') {alert("提交成功！")}
+                        });
+            }else {alert("昵称不能为空！")}
 
     }
-
     function buttonPressed(){
-
-
-        endTime = new Date().getTime();
-        if ( document.getElementById('button').innerHTML == "Start!") {
-            document.getElementById('button').innerHTML = "Lap!";
-            $("#button").button("refresh");
-            startTime = new Date().getTime();
-            change();
-        }else if (document.getElementById('button').innerHTML == "Lap!") {
-            var result = Number(endTime) - Number(startTime);
-
-            if (Math.abs(result-1000)<=errorvalue) {
-                if (Math.abs(result-1000)==0) {
-                    var points = 300;
-                }else {
-                    var points = 100 + parseInt(100 -(100/errorvalue) * Math.abs(result-1000));
-                }
+        switch ($('#button').text()) {
+            case "开始":
+                $('#button').text('计次');
                 startTime = new Date().getTime();
-                sum+=points;
-                document.getElementById('sum').innerHTML = "总分:"+sum;
-                arr_results.push("得分:"+points+"计时:"+(result / 1000).toFixed(3));
-
-                if (sum > 2000) {
-                    errorvalue = 50;
-                    $('#dif').text('连续掐出1秒，误差小于50毫秒');
-                }
-
-
-            }else {
-
-//                游戏结束
-                var i = 0;
-                while (i < arr_results.length){
-                    var para=document.createElement("li");
-                    para.innerHTML=arr_results[i];
-                    $('#results').append(para);
-                    i++;
-                }
-
-
-                $("#txt_show_sum").text(sum+"分");
-
-                $("#txt_show_title").text(title[(sum>51000) ? 50 : (parseInt(sum/1000))]);
-
-                $('#title').text("我在掐一秒游戏取得了" + $("#txt_show_sum").text() +";荣获称号:"+$("#txt_show_title").text());
-                $("#results").listview('refresh');
-                updateTime(result);
-                clearTimeout(temp);
-                $('#button').text("再来一次");
-                $("#button").button("refresh");
-                $('#bt_show').css('display','');
-            }
+                lapStartTime = startTime;
+                var node = $('<tr></tr>').html("<th data-priority='1'>计次</th><th data-priority='2'>时间(毫秒)</th><th data-priority='3'>得分</th>");
+                $('#results_table_head').append(node);
+                timer=setInterval("updatetimer()",5);
+                break;
+            case "计次":
+                    endTime = new Date().getTime();
+                    var lap = endTime-lapStartTime;
+                    if (isGameOver(lap)) {
+                        clearInterval(timer);
+                        updatetimer();
+                        para = document.createElement('h2');
+                        para.innerHTML = '总分:'+sum+' 获得称号:'+ title[(sum>51000) ? 50 : (parseInt(sum/1000))];
+                        $('#timer_total').after(para);
+                        $('#txt_show_sum').text(sum);
+                        $('#txt_show_title').text(title[(sum>51000) ? 50 : (parseInt(sum/1000))]);
+                        $('title').text("我在掐一秒游戏获得" + sum +"分，荣获称号:"+title[(sum>51000) ? 50 : (parseInt(sum/1000))]);
+                        $('#button').text('再来一次');
+                        $('#bt_show').css('display','');
+                    }else{
+                        var points = 0;
+                        if (lap == 1000) { points = 300;}else {points = 100 + Math.round( 100 - (100/errorvalue) * Math.abs(lap - 1000) ); }
+                        lap_count++;
+                        sum += points;
+                        var para = document.createElement('tr');
+                        para.innerHTML = '<th>'+lap_count+'</th>'+'<td>'+Math.abs(lap)+'</td>'+'<td>'+points+'</td>';
+                        $('#results_table_body').append(para);
+                        $('#results_table').table('refresh');
 
 
-        }else{
-           init();
+                    }
+                lapStartTime = new Date().getTime();
 
+                break;
+            case "再来一次":
+                    $('title').text("掐一秒游戏");
+                    $('#button').text('开始');
+                    $('#results_table_body').empty();
+                    $('#results_table_head').empty();
+                    $('#bt_show').css('display','none');
+                    $('#timer_total').text('00:00.00');
+                    $('#timer_lap').text('计次:0.00');
+                    $('h2').remove();
+                    sum = 0;
+                    lap_count = 0;
+                break;
+            default :
         }
 
 
-
-
     }
-    function change(){
+
+    function updatetimer(){
         endTime = new Date().getTime();
-        time = Number(endTime) - Number(startTime);
-        updateTime(time);
+        var total = Number(endTime) - Number(startTime);
+        var ms = total % 1000;
+        ms = Math.round(ms / 10);
+        total = parseInt(total / 1000);
+        var s = total % 60;
+        total = parseInt(total / 60);
+        var min = total % 60;
+        total = parseInt(total / 60);
+        var h = total;
+        $('#timer_total').text((min<10? '0'+min : min )+':'+(s<10? '0'+s : s )+'.'+(ms<10? '0'+ms : ms ));
 
-        temp=setTimeout("change()",5);
+        var lap = Number(endTime) - Number(lapStartTime);
+        $('#timer_lap').text('计次:'+(lap/1000).toFixed(2));
+
+
+
     }
 
+    function isGameOver(lap){
+        return (Math.abs(lap - 1000) > errorvalue);
+    }
 
-    function updateTime(t){
-        $('#time').text((t/1000).toFixed(2));
+    function rankPageShow(){
+
+        $.post("server/rank.php",
+                {action:"check"},
+                function(data,status){
+                   $('#rank_table_body').empty();
+                    var i = 0;
+                    $.each(data,function(idx,item){
+                        i++;
+                        var para=$("<tr></tr>").html('<th>'+i+'</th>'+'<td>'+item.name +'</td>'+'<td>'+item.points+'</td>'+'<td>'+item.title +'</td>');
+                        $('#rank_table_body').append(para);
+                    });
+                    $('#rank_table').table('refresh');
+                },
+                "json"
+        );
     }
 
 </script>
