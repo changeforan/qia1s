@@ -116,27 +116,23 @@
     $(document).on("pageshow", "#rank", function(){
 
 
-        $.post("server/rank.php",
+        $.post("http://121.42.141.119/qia1s/server/rank.php",
                 {
                     action:"check"
-
                 },
                 function(data,status){
-
                     while (document.getElementById('rank_table_tbody').children[0] != null) {
-
                         document.getElementById('rank_table_tbody').removeChild(document.getElementById('rank_table_tbody').children[0]);
                     }
-
                     var i = 0;
-
                     $.each(data,function(idx,item){
                         i++;
                         var para=document.createElement('tr');
-                        para.innerHTML='<th>'+i +'</th>'+'<td>'+item.name +'</td>'+'<td>'+item.points+'</td>'+'<td>'+item.title +'</td>'
+                        para.innerHTML='<th>'+i +'</th>'+'<td>'+item.name +'</td>'+'<td>'+item.points+'</td>'+'<td>'+item.title +'</td>';
                         $('#rank_table_tbody').append(para);
-
                     });
+                    $('#rank_table tr td').css('font-size','20px');
+                    $('#rank_table tr th').css('font-size','20px');
 
                     $('#rank_table').table('refresh');
 
